@@ -1,8 +1,8 @@
 from random import randrange
 from getvkdata import VKData
 from dblogic import VkDB
-from settings import VK_GROUP_API, VK_TINDER_SAY_HI, VK_TINDER_NOT_ENOUGTH_DATA, VK_TINDER_SEARCH_ENDED
-
+from settings import VK_GROUP_API, VK_TINDER_SAY_HI, VK_TINDER_NOT_ENOUGTH_DATA, \
+    VK_TINDER_SEARCH_ENDED, VK_TINDER_RANDOM_ID
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 
@@ -17,13 +17,13 @@ class VKTinder2020:
     def write_msg(self, user_id, message):
         """Отправляет сообщение пользователю с указанным ID"""
         self.vk.method('messages.send', {'user_id': user_id, 'message': message,
-                                    'random_id': randrange(10 ** 7)})
+                                    'random_id': VK_TINDER_RANDOM_ID})
 
     def write_msg_attach(self, user_id, message, attach):
         """Отправляет сообщение и аттач (фото в нашем случае) пользователю с указанным ID"""
         self.vk.method('messages.send', {'user_id': user_id, 'message': message,
                                     'attachment': attach,
-                                    'random_id': randrange(10 ** 7)})
+                                    'random_id': VK_TINDER_RANDOM_ID})
 
     def stage_two(self, token, user_id, search_user_id):
         vk_data = VKData(token)

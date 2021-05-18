@@ -4,7 +4,7 @@ class VKData:
     url = 'https://api.vk.com/method/'
     VERSION = '5.130'
 
-    def __init__(self, token, version='5.130'):
+    def __init__(self, token):
         self.token = token
         self.version = self.VERSION
         self.params = {
@@ -12,7 +12,7 @@ class VKData:
             'v': self.version
         }
 
-    def test_token(self, id = 1):
+    def test_token(self, id=1):
         test_url = self.url + 'users.get'
 
         dparams = {

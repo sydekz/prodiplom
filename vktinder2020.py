@@ -1,7 +1,7 @@
 from random import randrange
 from getvkdata import VKData
 from dblogic import VkDB
-from settings import VK_GROUP_API
+from settings import VK_GROUP_API, VK_TINDER_SAY_HI, VK_TINDER_NOT_ENOUGTH_DATA, VK_TINDER_SEARCH_ENDED
 
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
@@ -26,7 +26,6 @@ class VKTinder2020:
                                     'random_id': randrange(10 ** 7)})
 
     def stage_two(self, token, user_id, search_user_id):
-        users_list = list()
         vk_data = VKData(token)
         vk_db = VkDB()
 
@@ -62,13 +61,9 @@ class VKTinder2020:
     def send_standart_messages(self, user_id, type):
         """Повторяющиеся сообщения выносятся сюда для быстрого использования"""
         if type == 1:
-            self.write_msg(user_id, f"Данных было недостаточно для поиска партнера."
-                                          f" Попробуйте другого человека или уточните данные текущему,"
-                                          f" а потом попробуйте еще раз "
-                                          f"(В поиске используются пол, год и город)"
-                                          f" Введите ФИО")
+            self.write_msg(user_id, VK_TINDER_NOT_ENOUGTH_DATA)
         if type == 2:
-            self.write_msg(user_id, f"Поиск завершен. Чтобы попробовать еще введите ФИО")
+            self.write_msg(user_id, VK_TINDER_SEARCH_ENDED)
 
     def start(self):
         """Запускает бота"""
@@ -87,9 +82,7 @@ class VKTinder2020:
                 if event.to_me:
                     request = event.text
                     if not event.user_id in request_stage:
-                        self.write_msg(event.user_id,
-                                  f"Привет! Я искусственный интеллект по поиску пары. Чтобы начать работу"
-                                  f" введи токен в следующем сообщении")
+                        self.write_msg(event.user_id, VK_TINDER_SAY_HI)
                         request_stage[event.user_id] = 0
                         continue
 
